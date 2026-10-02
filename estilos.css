@@ -1,0 +1,647 @@
+/* ==========================================================================
+   Hospital de Día de Psiquiatría · Hoja de estilos
+   Estilo sereno y cálido: blanco roto, verde salvia y azul suave.
+   Sin librerías externas: tipografías del sistema.
+
+   Índice:
+     1. Variables (colores, tipografía, espacios)
+     2. Base y reseteo
+     3. Accesibilidad (saltar contenido, foco)
+     4. Utilidades de diseño
+     5. Cabecera y navegación
+     6. Portada
+     7. Secciones genéricas
+     8. Tarjetas "Cómo trabajamos"
+     9. Equipo
+    10. Pasos de acceso
+    11. Contacto
+    12. Pie y aviso de crisis
+    13. Responsive (tableta y escritorio)
+    14. Preferencias del usuario (movimiento reducido)
+   ========================================================================== */
+
+
+/* 1. VARIABLES ------------------------------------------------------------
+   Todos los colores de texto cumplen contraste AA (≥ 4.5:1) sobre el fondo
+   en el que se usan. Cambiando estas variables se ajusta toda la web. */
+:root {
+  /* Fondos */
+  --fondo: #faf8f3;            /* blanco roto cálido */
+  --fondo-tinte: #eef2ec;      /* salvia muy claro para secciones alternas */
+  --superficie: #ffffff;       /* tarjetas */
+
+  /* Verde salvia */
+  --salvia: #8fa98f;           /* decorativo (bordes, iconos) */
+  --salvia-claro: #dde7db;
+  --salvia-oscuro: #3f5e4a;    /* texto/botones: contraste 7.3:1 sobre --fondo */
+
+  /* Azul suave */
+  --azul: #a9c3d6;             /* decorativo */
+  --azul-claro: #e3edf4;
+  --azul-oscuro: #2f5573;      /* enlaces: contraste 7.6:1 sobre --fondo */
+
+  /* Texto */
+  --texto: #2b2f2c;            /* casi negro cálido: 13:1 */
+  --texto-suave: #4f5650;      /* secundario: 7:1 */
+
+  /* Aviso de crisis */
+  --crisis-fondo: #fbeee6;
+  --crisis-borde: #b5532f;
+  --crisis-texto: #6e2a12;     /* 9:1 sobre su fondo */
+
+  /* Tipografía: serif para títulos, sans-serif del sistema para texto */
+  --fuente-titulos: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", "Times New Roman", serif;
+  --fuente-texto: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Espaciado y formas */
+  --radio: 14px;
+  --radio-grande: 22px;
+  --sombra: 0 2px 6px rgba(43, 47, 44, .06), 0 8px 24px rgba(43, 47, 44, .06);
+  --ancho-max: 1120px;
+  --altura-cabecera: 72px;
+}
+
+
+/* 2. BASE ----------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* Desplazamiento suave al pulsar enlaces internos (se desactiva en el
+     apartado 14 si el usuario prefiere menos movimiento) */
+  scroll-behavior: smooth;
+  /* Compensa la cabecera fija al saltar a una sección */
+  scroll-padding-top: calc(var(--altura-cabecera) + 16px);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: var(--fuente-texto);
+  font-size: 1.0625rem;        /* ~17px: lectura cómoda */
+  line-height: 1.65;
+}
+
+h1, h2, h3 {
+  font-family: var(--fuente-titulos);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--salvia-oscuro);
+  margin: 0 0 .6em;
+}
+
+h1 { font-size: clamp(2.1rem, 6vw, 3.4rem); }
+h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); }
+h3 { font-size: 1.25rem; }
+
+p { margin: 0 0 1em; }
+
+/* Ancho de línea limitado para mejorar la legibilidad */
+p, li { max-width: 68ch; }
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--azul-oscuro);
+  text-underline-offset: .18em;
+}
+
+a:hover { text-decoration-thickness: 2px; }
+
+ul, ol { padding: 0; margin: 0; }
+
+
+/* 3. ACCESIBILIDAD -------------------------------------------------------- */
+
+/* Enlace "Saltar al contenido": fuera de pantalla hasta recibir foco */
+.saltar {
+  position: absolute;
+  left: 16px;
+  top: -100px;
+  z-index: 100;
+  padding: .75rem 1.25rem;
+  background: var(--salvia-oscuro);
+  color: #fff;
+  border-radius: var(--radio);
+  font-weight: 600;
+  text-decoration: none;
+  transition: top .2s;
+}
+.saltar:focus { top: 12px; }
+
+/* Indicador de foco visible y consistente para navegación con teclado.
+   :focus-visible solo lo muestra al usar teclado, no al hacer clic. */
+:focus-visible {
+  outline: 3px solid var(--azul-oscuro);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* El <main> recibe foco al usar "Saltar al contenido"; no necesita contorno */
+main:focus { outline: none; }
+
+
+/* 4. UTILIDADES ----------------------------------------------------------- */
+.contenedor {
+  width: 100%;
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.nota {
+  font-size: .95rem;
+  color: var(--texto-suave);
+  font-style: italic;
+}
+
+/* Botones */
+.boton {
+  display: inline-block;
+  padding: .85rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid var(--salvia-oscuro);
+  transition: background-color .2s, color .2s;
+  min-height: 48px;            /* área táctil cómoda */
+}
+.boton--principal {
+  background: var(--salvia-oscuro);
+  color: #fff;
+}
+.boton--principal:hover { background: #2f4838; }
+.boton--secundario {
+  background: transparent;
+  color: var(--salvia-oscuro);
+}
+.boton--secundario:hover { background: var(--salvia-claro); }
+
+
+/* 5. CABECERA Y NAVEGACIÓN ------------------------------------------------ */
+.cabecera {
+  position: sticky;            /* se mantiene visible al hacer scroll */
+  top: 0;
+  z-index: 50;
+  background: rgba(250, 248, 243, .96);
+  border-bottom: 1px solid var(--salvia-claro);
+  backdrop-filter: blur(6px);
+}
+
+.cabecera__interior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--altura-cabecera);
+  gap: 1rem;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  text-decoration: none;
+  color: var(--salvia-oscuro);
+}
+.marca__icono { width: 34px; height: 34px; flex-shrink: 0; }
+.marca__texto { display: flex; flex-direction: column; line-height: 1.2; }
+.marca__titulo { font-family: var(--fuente-titulos); font-weight: 600; font-size: 1rem; }
+.marca__subtitulo { font-size: .85rem; color: var(--texto-suave); }
+
+/* Botón hamburguesa (solo visible en móvil) */
+.menu-boton {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  min-height: 44px;
+  padding: .5rem .9rem;
+  background: transparent;
+  border: 2px solid var(--salvia-oscuro);
+  border-radius: 999px;
+  color: var(--salvia-oscuro);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Tres barras dibujadas con un elemento y sus pseudoelementos */
+.menu-boton__barras,
+.menu-boton__barras::before,
+.menu-boton__barras::after {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: transform .25s, opacity .25s;
+}
+.menu-boton__barras { position: relative; }
+.menu-boton__barras::before,
+.menu-boton__barras::after { content: ""; position: absolute; left: 0; }
+.menu-boton__barras::before { top: -6px; }
+.menu-boton__barras::after { top: 6px; }
+
+/* Al abrir el menú, las barras se convierten en una "X" */
+.menu-boton[aria-expanded="true"] .menu-boton__barras { background: transparent; }
+.menu-boton[aria-expanded="true"] .menu-boton__barras::before { transform: translateY(6px) rotate(45deg); }
+.menu-boton[aria-expanded="true"] .menu-boton__barras::after { transform: translateY(-6px) rotate(-45deg); }
+
+/* Navegación en móvil: panel desplegable bajo la cabecera */
+.navegacion {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--fondo);
+  border-bottom: 1px solid var(--salvia-claro);
+  box-shadow: var(--sombra);
+  display: none;               /* oculto por defecto; script.js añade .abierta */
+}
+.navegacion.abierta { display: block; }
+
+/* Si JavaScript no está disponible, el menú se muestra siempre (ver script.js) */
+.sin-js .navegacion { position: static; display: block; box-shadow: none; }
+.sin-js .menu-boton { display: none; }
+
+.navegacion__lista {
+  list-style: none;
+  padding: .5rem 1.25rem 1rem;
+}
+.navegacion__lista a {
+  display: block;
+  padding: .8rem .25rem;
+  color: var(--texto);
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid var(--salvia-claro);
+}
+.navegacion__lista li:last-child a { border-bottom: 0; }
+.navegacion__lista a:hover,
+.navegacion__lista a[aria-current="true"] { color: var(--salvia-oscuro); }
+/* Sección activa: se marca desde script.js con aria-current */
+.navegacion__lista a[aria-current="true"] { font-weight: 700; }
+
+
+/* 6. PORTADA -------------------------------------------------------------- */
+.portada {
+  /* Fondo con formas suaves en salvia y azul, sin imágenes */
+  background:
+    radial-gradient(circle at 85% 20%, var(--azul-claro) 0, transparent 45%),
+    radial-gradient(circle at 10% 90%, var(--salvia-claro) 0, transparent 50%),
+    var(--fondo);
+  padding: 4.5rem 0 4rem;
+}
+
+.portada__antetitulo {
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--azul-oscuro);
+}
+
+.portada__bienvenida {
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  color: var(--texto-suave);
+  max-width: 40ch;
+  margin-bottom: 2rem;
+}
+
+.portada__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .9rem;
+}
+
+/* Rejilla de la portada: una columna en móvil, dos en escritorio (ver apartado 13) */
+.portada__interior {
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+/* Imagen de portada: marco redondeado con un detalle decorativo en salvia */
+.portada__imagen {
+  position: relative;
+  margin: 0;
+  max-width: 560px;            /* limita el tamaño para que no se pixele */
+  justify-self: center;
+  width: 100%;
+}
+
+/* Rectángulo decorativo desplazado detrás de la foto */
+.portada__imagen::before {
+  content: "";
+  position: absolute;
+  inset: 14px -14px -14px 14px;
+  border-radius: var(--radio-grande);
+  background: var(--salvia-claro);
+  border: 2px solid var(--salvia);
+  z-index: 0;
+}
+
+.portada__imagen img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center 60%; /* encuadra el cartel y la fachada */
+  border-radius: var(--radio-grande);
+  box-shadow: var(--sombra);
+  /* Color de reserva mientras carga (o si falta) la imagen */
+  background: linear-gradient(135deg, var(--salvia-claro), var(--azul-claro));
+}
+
+/* Si la imagen no se encuentra, script.js oculta el bloque completo */
+.portada__imagen.imagen-no-disponible { display: none; }
+
+
+/* 7. SECCIONES GENÉRICAS -------------------------------------------------- */
+.seccion { padding: 4rem 0; }
+.seccion--tinte { background: var(--fondo-tinte); }
+
+.seccion__intro {
+  font-size: 1.1rem;
+  color: var(--texto-suave);
+  margin-bottom: 2.25rem;
+}
+
+.dos-columnas {
+  display: grid;
+  gap: 2rem;
+}
+
+/* Recuadro "¿A quién va dirigido?" */
+.destacado {
+  background: var(--azul-claro);
+  border-left: 5px solid var(--azul);
+  border-radius: var(--radio);
+  padding: 1.5rem 1.5rem 1rem;
+}
+.destacado h3 { color: var(--azul-oscuro); }
+
+/* Lista con marcas de verificación dibujadas en CSS */
+.lista-check { list-style: none; margin-bottom: 1rem; }
+.lista-check li {
+  position: relative;
+  padding-left: 1.9rem;
+  margin-bottom: .75rem;
+}
+.lista-check li::before {
+  content: "";
+  position: absolute;
+  left: .2rem;
+  top: .35em;
+  width: .55rem;
+  height: .95rem;
+  border: solid var(--salvia-oscuro);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+
+/* 8. TARJETAS "CÓMO TRABAJAMOS" ------------------------------------------- */
+.tarjetas {
+  list-style: none;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.tarjeta {
+  background: var(--superficie);
+  border-radius: var(--radio-grande);
+  overflow: hidden;
+  box-shadow: var(--sombra);
+  display: flex;
+  flex-direction: column;
+  max-width: none;
+  transition: transform .25s, box-shadow .25s;
+}
+.tarjeta:hover { transform: translateY(-3px); }
+
+.tarjeta img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  /* Color de reserva mientras carga (o si falta) la imagen */
+  background: linear-gradient(135deg, var(--salvia-claro), var(--azul-claro));
+}
+
+/* Si la imagen no existe, script.js añade esta clase para ocultarla con elegancia */
+.tarjeta img.imagen-no-disponible { display: none; }
+.tarjeta:has(img.imagen-no-disponible) { border-top: 6px solid var(--salvia); }
+
+.tarjeta__cuerpo { padding: 1.4rem 1.5rem 1.6rem; }
+.tarjeta__cuerpo p { color: var(--texto-suave); margin: 0; }
+
+
+/* 9. EQUIPO --------------------------------------------------------------- */
+.equipo {
+  list-style: none;
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.perfil {
+  max-width: none;
+  background: var(--superficie);
+  border: 1px solid var(--salvia-claro);
+  border-top: 5px solid var(--salvia);
+  border-radius: var(--radio);
+  padding: 1.4rem 1.5rem;
+}
+/* Alterna el color del borde superior entre salvia y azul */
+.perfil:nth-child(even) { border-top-color: var(--azul); }
+.perfil p { margin: 0; color: var(--texto-suave); }
+
+
+/* 10. PASOS DE ACCESO ----------------------------------------------------- */
+.pasos {
+  list-style: none;
+  counter-reset: paso;         /* contador CSS para numerar los pasos */
+  display: grid;
+  gap: 1.25rem;
+}
+
+.paso {
+  counter-increment: paso;
+  position: relative;
+  max-width: none;
+  background: var(--superficie);
+  border-radius: var(--radio);
+  padding: 1.4rem 1.5rem 1.4rem 4.6rem;
+  box-shadow: var(--sombra);
+}
+
+/* Número del paso en un círculo */
+.paso::before {
+  content: counter(paso);
+  position: absolute;
+  left: 1.25rem;
+  top: 1.3rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--salvia-oscuro);
+  color: #fff;
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.paso h3 { margin-bottom: .35em; }
+.paso p { margin: 0; color: var(--texto-suave); }
+
+
+/* 11. CONTACTO ------------------------------------------------------------ */
+.contacto {
+  display: grid;
+  gap: 2rem;
+}
+
+.contacto__datos {
+  font-style: normal;          /* <address> es cursiva por defecto */
+  background: var(--superficie);
+  border-radius: var(--radio-grande);
+  box-shadow: var(--sombra);
+  padding: 1.75rem;
+}
+
+.contacto__datos dl { margin: 0; display: grid; gap: 1.25rem; }
+.dato dt {
+  font-weight: 700;
+  color: var(--salvia-oscuro);
+  font-size: .9rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.dato dd { margin: .2rem 0 0; }
+.dato a { font-weight: 600; word-break: break-word; }
+
+.contacto__nota {
+  background: var(--salvia-claro);
+  border-radius: var(--radio-grande);
+  padding: 1.75rem;
+}
+.contacto__nota p:last-child { margin-bottom: 0; }
+
+
+/* 12. PIE Y AVISO DE CRISIS ----------------------------------------------- */
+.pie {
+  background: #2f3a33;         /* verde muy oscuro */
+  color: #eef2ec;              /* contraste 11:1 */
+  padding: 2.5rem 0 2rem;
+}
+
+.aviso-crisis {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--crisis-fondo);
+  border: 3px solid var(--crisis-borde);
+  border-radius: var(--radio-grande);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+  color: var(--crisis-texto);
+}
+.aviso-crisis__icono {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  color: var(--crisis-borde);
+}
+.aviso-crisis__texto {
+  margin: 0;
+  max-width: none;
+  font-size: clamp(1.1rem, 2.6vw, 1.35rem);
+  font-weight: 700;
+  line-height: 1.4;
+}
+.aviso-crisis a {
+  color: var(--crisis-texto);
+  text-decoration-thickness: 2px;
+  white-space: nowrap;
+}
+.aviso-crisis a:focus-visible { outline-color: var(--crisis-texto); }
+
+.pie__inferior { font-size: .92rem; }
+.pie__inferior p { margin-bottom: .5rem; }
+.pie a { color: #ffffff; }
+.pie .pie__inferior a:focus-visible { outline-color: #ffffff; }
+.volver-arriba { display: inline-block; margin-top: .5rem; font-weight: 600; }
+
+
+/* 13. RESPONSIVE ----------------------------------------------------------
+   Diseño "mobile first": lo anterior es para móvil; aquí se amplía. */
+
+/* Tableta */
+@media (min-width: 640px) {
+  .tarjetas,
+  .equipo,
+  .pasos { grid-template-columns: repeat(2, 1fr); }
+  .contacto { grid-template-columns: 1.1fr 1fr; align-items: start; }
+}
+
+/* Escritorio: menú horizontal siempre visible */
+@media (min-width: 960px) {
+  .menu-boton { display: none; }
+
+  .navegacion,
+  .sin-js .navegacion {
+    position: static;
+    display: block;
+    background: none;
+    border: 0;
+    box-shadow: none;
+  }
+  .navegacion__lista {
+    display: flex;
+    gap: .25rem;
+    padding: 0;
+  }
+  .navegacion__lista a {
+    border: 0;
+    padding: .5rem .8rem;
+    border-radius: 999px;
+  }
+  .navegacion__lista a:hover { background: var(--salvia-claro); }
+  .navegacion__lista a[aria-current="true"] { background: var(--salvia-claro); }
+
+  .portada { padding: 5.5rem 0 5.5rem; }
+  /* Portada en dos columnas: texto a la izquierda, imagen a la derecha */
+  .portada__interior { grid-template-columns: 1.1fr 1fr; gap: 3.5rem; }
+  .portada__imagen { justify-self: end; }
+  .seccion { padding: 5.5rem 0; }
+  .dos-columnas { grid-template-columns: 1.3fr 1fr; gap: 3.5rem; align-items: start; }
+  .tarjetas,
+  .equipo { grid-template-columns: repeat(3, 1fr); }
+  .pasos { grid-template-columns: repeat(4, 1fr); }
+  .paso { padding: 4.6rem 1.4rem 1.5rem; }
+  .paso::before { top: 1.4rem; left: 1.4rem; }
+}
+
+
+/* 14. PREFERENCIAS DEL USUARIO --------------------------------------------
+   Respeta la opción del sistema "reducir movimiento". */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+  }
+  .tarjeta:hover { transform: none; }
+}

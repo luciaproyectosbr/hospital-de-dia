@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<!--
+  Hospital de Día de Psiquiatría · Hospital Universitario Ramón y Cajal
+  Web informativa de una sola página para pacientes y familiares.
+
+  Estructura:
+    1. Enlace "Saltar al contenido" (accesibilidad con teclado)
+    2. Cabecera con navegación (menú desplegable en móvil)
+    3. Portada (hero)
+    4. Qué es el Hospital de Día
+    5. Cómo trabajamos (6 tarjetas)
+    6. El equipo
+    7. Cómo acceder
+    8. Contacto
+    9. Pie con aviso de crisis
+
+  Marcadores a completar: [TELÉFONO], [EMAIL], [HORARIO], [UBICACIÓN]
+-->
+<!-- La clase "sin-js" muestra el menú abierto si JavaScript no está disponible;
+     script.js la retira al cargarse. -->
+<html lang="es" class="sin-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hospital de Día de Psiquiatría · Hospital Universitario Ramón y Cajal</title>
+  <meta name="description" content="Información para pacientes y familiares sobre el Hospital de Día de Psiquiatría del Hospital Universitario Ramón y Cajal (Madrid): qué es, cómo trabajamos, el equipo, cómo acceder y contacto.">
+  <!-- Color de la barra del navegador en móvil (verde salvia oscuro) -->
+  <meta name="theme-color" content="#3f5e4a">
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <!-- Enlace oculto que aparece al recibir foco con el tabulador:
+       permite saltar la navegación e ir directo al contenido. -->
+  <a class="saltar" href="#contenido">Saltar al contenido principal</a>
+
+  <!-- ============ CABECERA Y NAVEGACIÓN ============ -->
+  <header class="cabecera">
+    <div class="contenedor cabecera__interior">
+      <a class="marca" href="#inicio" aria-label="Hospital de Día de Psiquiatría, ir al inicio">
+        <!-- Icono decorativo (hoja), oculto a lectores de pantalla -->
+        <svg class="marca__icono" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <path d="M16 3C9 8 6 14 6 19a10 10 0 0 0 20 0c0-5-3-11-10-16Z" fill="currentColor" opacity=".25"/>
+          <path d="M16 8v20M16 15l-4-3M16 20l5-4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+        <span class="marca__texto">
+          <span class="marca__titulo">Hospital de Día de Psiquiatría</span>
+          <span class="marca__subtitulo">H. U. Ramón y Cajal</span>
+        </span>
+      </a>
+
+      <!-- Botón del menú móvil. aria-expanded se actualiza desde script.js -->
+      <button class="menu-boton" type="button" aria-expanded="false" aria-controls="menu-principal">
+        <span class="menu-boton__barras" aria-hidden="true"></span>
+        <span class="menu-boton__texto">Menú</span>
+      </button>
+
+      <nav class="navegacion" aria-label="Navegación principal">
+        <ul id="menu-principal" class="navegacion__lista">
+          <li><a href="#que-es">Qué es</a></li>
+          <li><a href="#como-trabajamos">Cómo trabajamos</a></li>
+          <li><a href="#equipo">El equipo</a></li>
+          <li><a href="#acceso">Cómo acceder</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+
+    <!-- ============ PORTADA ============ -->
+    <section id="inicio" class="portada" aria-labelledby="titulo-portada">
+      <!-- Rejilla de dos columnas en escritorio (texto | imagen);
+           en móvil, la imagen queda debajo del texto. -->
+      <div class="contenedor portada__interior">
+        <div class="portada__texto">
+          <p class="portada__antetitulo">Servicio de Psiquiatría · Hospital Universitario Ramón y Cajal</p>
+          <h1 id="titulo-portada">Hospital de Día de Psiquiatría</h1>
+          <p class="portada__bienvenida">
+            Bienvenida, bienvenido. Este es un espacio de cuidado donde te acompañamos,
+            día a día, en tu proceso de recuperación, sin dejar de lado tu vida y tu entorno.
+          </p>
+          <div class="portada__acciones">
+            <a class="boton boton--principal" href="#que-es">Conoce el servicio</a>
+            <a class="boton boton--secundario" href="#contacto">Contacto</a>
+          </div>
+        </div>
+
+      <!-- Imagen de portada: fachada del hospital.
+           Se muestra junto al texto (y no como fondo) para no perder
+           contraste en el título ni pixelarse a gran tamaño.
+           fetchpriority="high": es la primera imagen visible, se carga antes. -->
+      <figure class="portada__imagen">
+        <img src="img/portada.jpg"
+             alt="Fachada del Hospital Universitario Ramón y Cajal, con el cartel de entrada del hospital en primer plano y el edificio bajo un cielo azul"
+             width="1200" height="675" fetchpriority="high">
+      </figure>
+      </div>
+    </section>
+
+    <!-- ============ QUÉ ES ============ -->
+    <section id="que-es" class="seccion" aria-labelledby="titulo-que-es">
+      <div class="contenedor dos-columnas">
+        <div>
+          <h2 id="titulo-que-es">Qué es el Hospital de Día</h2>
+          <p>
+            El Hospital de Día es un recurso de tratamiento <strong>intensivo y ambulatorio</strong>:
+            acudes al hospital durante el día para participar en un programa terapéutico
+            y regresas a casa por la tarde. Así recibes una atención continuada sin necesidad
+            de ingreso y manteniendo el contacto con tu familia y tu entorno.
+          </p>
+          <p>
+            Es una alternativa a la hospitalización completa y, a la vez, un puente
+            tras un ingreso, para facilitar una vuelta progresiva a la vida cotidiana.
+          </p>
+        </div>
+
+        <aside class="destacado" aria-labelledby="titulo-dirigido">
+          <h3 id="titulo-dirigido">¿A quién va dirigido?</h3>
+          <ul class="lista-check">
+            <li>Personas adultas con un problema de salud mental que necesitan un tratamiento más intensivo que la consulta habitual.</li>
+            <li>Personas que, tras un ingreso hospitalario, necesitan seguir un tratamiento estructurado antes de volver a su rutina.</li>
+            <li>Personas que pueden acudir de forma regular al hospital y cuentan con un entorno que les apoya en casa.</li>
+          </ul>
+          <p class="nota">Tu psiquiatra valorará contigo si este recurso es el adecuado para ti.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ CÓMO TRABAJAMOS ============ -->
+    <section id="como-trabajamos" class="seccion seccion--tinte" aria-labelledby="titulo-trabajamos">
+      <div class="contenedor">
+        <h2 id="titulo-trabajamos">Cómo trabajamos</h2>
+        <p class="seccion__intro">
+          Cada persona tiene un plan de tratamiento individualizado que combina distintas
+          actividades terapéuticas. Estas son algunas de ellas:
+        </p>
+
+        <!-- Rejilla de tarjetas: 1 columna en móvil, 2 en tableta, 3 en escritorio -->
+        <ul class="tarjetas">
+          <li class="tarjeta">
+            <img src="img/imagen1.jpg" alt="Grupo de personas sentadas en círculo conversando en una sala luminosa" width="600" height="400" loading="lazy">
+            <div class="tarjeta__cuerpo">
+              <h3>Terapia de grupo</h3>
+              <p>Un espacio para compartir experiencias, sentirse escuchado y aprender de otras personas que atraviesan situaciones parecidas.</p>
+            </div>
+          </li>
+          <li class="tarjeta">
+            <img src="img/imagen2.jpg" alt="Profesional y paciente conversando frente a frente en una consulta tranquila" width="600" height="400" loading="lazy">
+            <div class="tarjeta__cuerpo">
+              <h3>Psicoterapia individual</h3>
+              <p>Sesiones personales para trabajar en profundidad lo que te preocupa y definir tus propios objetivos de recuperación.</p>
+            </div>
+          </li>
+          <li class="tarjeta">
+            <img src="img/imagen3.jpg" alt="Manos realizando una actividad manual creativa sobre una mesa" width="600" height="400" loading="lazy">
+            <div class="tarjeta__cuerpo">
+              <h3>Terapia ocupacional</h3>
+              <p>Actividades que ayudan a recuperar rutinas, hábitos y habilidades para la vida diaria, el ocio y la autonomía personal.</p>
+            </div>
+          </li>
+          <li class="tarjeta">
+            <img src="img/imagen4.jpg" alt="Sesión informativa con una profesional explicando contenidos a un pequeño grupo" width="600" height="400" loading="lazy">
+            <div class="tarjeta__cuerpo">
+              <h3>Psicoeducación</h3>
+              <p>Información clara sobre la enfermedad, el tratamiento y las señales de alerta, para que puedas participar activamente en tu cuidado.</p>
+            </div>
+          </li>
+          <li class="tarjeta">
+            <img src="img/imagen5.jpg" alt="Psiquiatra revisando un plan de tratamiento junto a un paciente" width="600" height="400" loading="lazy">
+            <div class="tarjeta__cuerpo">
+              <h3>Seguimiento farmacológico</h3>
+              <p>Revisión periódica de la medicación con tu psiquiatra para ajustar el tratamiento y resolver tus dudas.</p>
+            </div>
+          </li>
+          <li class="tarjeta">
+            <img src="img/imagen6.jpg" alt="Familia reunida conversando con una profesional sanitaria" width="600" height="400" loading="lazy">
+            <div class="tarjeta__cuerpo">
+              <h3>Trabajo con familias</h3>
+              <p>Encuentros con familiares y personas cercanas para orientar, resolver dudas y fortalecer la red de apoyo.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ EL EQUIPO ============ -->
+    <section id="equipo" class="seccion" aria-labelledby="titulo-equipo">
+      <div class="contenedor">
+        <h2 id="titulo-equipo">El equipo</h2>
+        <p class="seccion__intro">
+          Te atiende un equipo multidisciplinar que trabaja de forma coordinada
+          para ofrecerte una atención integral.
+        </p>
+
+        <ul class="equipo">
+          <li class="perfil">
+            <h3>Psiquiatría</h3>
+            <p>Valoración clínica, diagnóstico, coordinación del plan de tratamiento y seguimiento de la medicación.</p>
+          </li>
+          <li class="perfil">
+            <h3>Psicología clínica</h3>
+            <p>Evaluación psicológica y psicoterapia individual y grupal.</p>
+          </li>
+          <li class="perfil">
+            <h3>Enfermería de salud mental</h3>
+            <p>Cuidados, educación para la salud, apoyo en hábitos saludables y en la adherencia al tratamiento.</p>
+          </li>
+          <li class="perfil">
+            <h3>Terapia ocupacional</h3>
+            <p>Recuperación de rutinas, autonomía y actividades significativas para tu día a día.</p>
+          </li>
+          <li class="perfil">
+            <h3>Trabajo social</h3>
+            <p>Orientación sobre recursos sociales, laborales y comunitarios, y apoyo a las familias.</p>
+          </li>
+          <li class="perfil">
+            <h3>Técnicos en cuidados de enfermería</h3>
+            <p>Acompañamiento cercano durante la jornada y apoyo en las actividades del programa.</p>
+          </li>
+        </ul>
+        <p class="nota">Como hospital universitario, también colaboran profesionales en formación, siempre supervisados.</p>
+      </div>
+    </section>
+
+    <!-- ============ CÓMO ACCEDER ============ -->
+    <section id="acceso" class="seccion seccion--tinte" aria-labelledby="titulo-acceso">
+      <div class="contenedor">
+        <h2 id="titulo-acceso">Cómo acceder</h2>
+        <p class="seccion__intro">
+          El acceso se realiza <strong>mediante derivación de tu psiquiatra de referencia</strong>
+          (en tu centro de salud mental o en el propio hospital). No es posible solicitar plaza directamente.
+        </p>
+
+        <!-- Lista ordenada: el orden de los pasos tiene significado -->
+        <ol class="pasos">
+          <li class="paso">
+            <h3>Habla con tu psiquiatra</h3>
+            <p>Si crees que el Hospital de Día puede ayudarte, coméntalo en tu próxima consulta.</p>
+          </li>
+          <li class="paso">
+            <h3>Derivación</h3>
+            <p>Tu psiquiatra envía la solicitud al Hospital de Día con la información clínica necesaria.</p>
+          </li>
+          <li class="paso">
+            <h3>Entrevista de acogida</h3>
+            <p>Te citamos para conocerte, explicarte el programa y valorar juntos si es el recurso adecuado.</p>
+          </li>
+          <li class="paso">
+            <h3>Inicio del tratamiento</h3>
+            <p>Acordamos contigo tu plan individual, los objetivos y el calendario de actividades.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ CONTACTO ============ -->
+    <section id="contacto" class="seccion" aria-labelledby="titulo-contacto">
+      <div class="contenedor">
+        <h2 id="titulo-contacto">Contacto</h2>
+
+        <div class="contacto">
+          <!-- <address> semántico para los datos de contacto -->
+          <address class="contacto__datos">
+            <dl>
+              <div class="dato">
+                <dt>Dirección</dt>
+                <dd>
+                  Hospital Universitario Ramón y Cajal<br>
+                  Ctra. de Colmenar Viejo, km 9,100<br>
+                  28034 Madrid<br>
+                  [UBICACIÓN: planta / módulo]
+                </dd>
+              </div>
+              <div class="dato">
+                <dt>Horario</dt>
+                <dd>[HORARIO]</dd>
+              </div>
+              <div class="dato">
+                <dt>Teléfono</dt>
+                <!-- Sustituir [TELÉFONO] también dentro de href="tel:..." (solo dígitos, p. ej. tel:+34910000000) -->
+                <dd><a href="tel:[TELÉFONO]">[TELÉFONO]</a></dd>
+              </div>
+              <div class="dato">
+                <dt>Correo electrónico</dt>
+                <!-- Sustituir [EMAIL] también dentro de href="mailto:..." -->
+                <dd><a href="mailto:[EMAIL]">[EMAIL]</a></dd>
+              </div>
+            </dl>
+          </address>
+
+          <div class="contacto__nota">
+            <h3>Antes de venir</h3>
+            <p>
+              Si tienes una cita, trae tu tarjeta sanitaria y, si la tienes, la información
+              de tu tratamiento actual. Si no puedes acudir, avísanos por teléfono.
+            </p>
+            <p>
+              Los teléfonos y el correo del servicio no son para urgencias. Si lo necesitas,
+              consulta el aviso de crisis al final de esta página.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ PIE ============ -->
+  <footer class="pie">
+    <div class="contenedor">
+      <!-- Aviso de crisis: role="note" lo identifica como información complementaria
+           importante; los números son enlaces que permiten llamar desde el móvil. -->
+      <div class="aviso-crisis" role="note" aria-labelledby="titulo-crisis">
+        <svg class="aviso-crisis__icono" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1Z" fill="currentColor"/>
+        </svg>
+        <p id="titulo-crisis" class="aviso-crisis__texto">
+          Si estás en una situación de crisis, llama al
+          <a href="tel:112">112</a> o al <a href="tel:024">024</a>
+        </p>
+      </div>
+
+      <div class="pie__inferior">
+        <p>Hospital de Día de Psiquiatría · Hospital Universitario Ramón y Cajal · Madrid</p>
+        <p>
+          Esta página tiene carácter informativo y no sustituye la valoración de un profesional.
+          © <span id="anio-actual">2026</span>
+        </p>
+        <a class="volver-arriba" href="#inicio">Volver arriba ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- El script va al final con "defer" para no bloquear la carga de la página -->
+  <script src="script.js" defer></script>
+</body>
+</html>
